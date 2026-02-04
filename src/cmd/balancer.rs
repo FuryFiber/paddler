@@ -221,6 +221,7 @@ impl Handler for Balancer {
                 openai_service_configuration: OpenAIServiceConfiguration {
                     addr: compat_openai_addr.socket_addr,
                 },
+                state_database: state_database.clone(),
             });
         }
 

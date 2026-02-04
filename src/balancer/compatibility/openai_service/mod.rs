@@ -19,11 +19,13 @@ use crate::balancer::http_route as common_http_route;
 use crate::balancer::inference_service::configuration::Configuration as InferenceServiceConfiguration;
 use crate::create_cors_middleware::create_cors_middleware;
 use crate::service::Service;
+use crate::balancer::state_database::StateDatabase;
 
 pub struct OpenAIService {
     pub buffered_request_manager: Arc<BufferedRequestManager>,
     pub inference_service_configuration: InferenceServiceConfiguration,
     pub openai_service_configuration: OpenAIServiceConfiguration,
+    pub state_database: Arc<dyn StateDatabase>,
 }
 
 #[async_trait]
@@ -42,6 +44,7 @@ impl Service for OpenAIService {
         let app_data = Data::new(AppData {
             buffered_request_manager: self.buffered_request_manager.clone(),
             inference_service_configuration: self.inference_service_configuration.clone(),
+            state_database: self.state_database.clone(),
         });
 
         HttpServer::new(move || {
