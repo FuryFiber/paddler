@@ -25,7 +25,7 @@ fn current_timestamp() -> u64 {
         .as_secs()
 }
 
-#[post("/v1/models")]
+#[get("/v1/models")]
 async fn list_models(
     app_data: web::Data<AppData>,
 ) -> Result<HttpResponse, Error> {
