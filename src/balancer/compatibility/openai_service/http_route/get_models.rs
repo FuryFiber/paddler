@@ -35,6 +35,6 @@ async fn list_models(
         .await
         .map_err(actix_web::error::ErrorInternalServerError)?;
 
-    Ok(HttpResponse::Ok().json(desired_state))
+    Ok(HttpResponse::Ok().json("hello world!"))
 
 }
