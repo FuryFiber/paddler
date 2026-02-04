@@ -7,5 +7,5 @@ use crate::balancer::state_database::StateDatabase;
 pub struct AppData {
     pub buffered_request_manager: Arc<BufferedRequestManager>,
     pub inference_service_configuration: Configuration,
-    pub state_datebase: Arc<dyn StateDatabase>,
+    pub state_database: Arc<dyn StateDatabase>,
 }
