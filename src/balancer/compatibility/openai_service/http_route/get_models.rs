@@ -36,7 +36,7 @@ async fn list_models(
         .map_err(actix_web::error::ErrorInternalServerError)?;
 
     // For simplicity, we assume that the model is always ready to use.
-    let model_name = match &desired_state.agent_desired_state.model {
+    let model_name = match &desired_state.model {
         crate::agent_desired_model::AgentDesiredModel::HuggingFace(hf_model_ref) => {
             format!("hf_{}", hf_model_ref.repo_id.replace('/', "_"))
         }
