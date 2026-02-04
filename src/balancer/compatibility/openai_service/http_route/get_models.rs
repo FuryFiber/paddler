@@ -3,7 +3,7 @@ use std::time::UNIX_EPOCH;
 
 use actix_web::Error;
 use actix_web::HttpResponse;
-use actix_web::post;
+use actix_web::get;
 use actix_web::web;
 use anyhow::anyhow;
 use async_trait::async_trait;
@@ -25,7 +25,7 @@ fn current_timestamp() -> u64 {
         .as_secs()
 }
 
-#[post("/v1/models")]
+#[get("/v1/models")]
 async fn list_models(
     app_data: web::Data<AppData>,
 ) -> Result<HttpResponse, Error> {
