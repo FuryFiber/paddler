@@ -18,19 +18,8 @@ pub fn register(cfg: &mut web::ServiceConfig) {
     cfg.service(list_models);
 }
 
-fn current_timestamp() -> u64 {
-    SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .expect("Time went backwards")
-        .as_secs()
-}
-
 #[get("/v1/models")]
-async fn list_models(
-    app_data: web::Data<AppData>,
-) -> Result<HttpResponse, Error> {
+async fn list_models() -> Result<HttpResponse, Error> {
     let response = "hello world!";
-
     Ok(HttpResponse::Ok().json(response))
-
 }
