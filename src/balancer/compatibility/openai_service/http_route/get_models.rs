@@ -5,6 +5,7 @@ use actix_web::error::ErrorInternalServerError;
 use actix_web::get;
 use actix_web::web;
 use crate::balancer::compatibility::openai_service::app_data::AppData;
+use crate::agent_desired_model::AgentDesiredModel;
 
 pub fn register(cfg: &mut web::ServiceConfig) {
     cfg.service(respond);
