@@ -20,12 +20,19 @@ async fn respond(app_data: web::Data<AppData>) -> Result<impl Responder, Error> 
         .map_err(ErrorInternalServerError)?;
     
     let filename = match desired_state.model {
-        AgentDesiredModel::HuggingFace(model) => model.filename.clone().as_str(),
-        AgentDesiredModel::LocalToAgent(path) => path.clone().as_str(), // Or handle differently
-        AgentDesiredModel::None => "",
+        AgentDesiredModel::HuggingFace(model) => Some(model.filename.as_str()),
+        AgentDesiredModel::LocalToAgent(path) => Some(path.as_str()), // Or handle differently
+        AgentDesiredModel::None => None,
     };
     
-    let stem = filename.split('.').next().unwrap_or(filename);
+    let stem = "";
+    if let Some(filename) = filename {
+        stem = filename.split('.').next().unwrap_or(filename);
+    } else {
+        stem = "none";
+    }
+    
+    let response = "{\"data\": [{\"id\": \"" + stem + "\", \"object\": \"model\", \"owned_by\": \"user\"}], \"object\": \"list\"}";
 
-    Ok(HttpResponse::Ok().json(stem))
+    Ok(HttpResponse::Ok().json(response))
 }
