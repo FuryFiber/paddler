@@ -20,8 +20,8 @@ async fn respond(app_data: web::Data<AppData>) -> Result<impl Responder, Error> 
         .map_err(ErrorInternalServerError)?;
     
     let filename = match desired_state.model {
-        AgentDesiredModel::HuggingFace(model) => Some(model.filename.as_str()),
-        AgentDesiredModel::LocalToAgent(path) => Some(path.as_str()), // Or handle differently
+        AgentDesiredModel::HuggingFace(model) => model.filename.as_str(),
+        AgentDesiredModel::LocalToAgent(path) => path.as_str(), // Or handle differently
         AgentDesiredModel::None => "",
     };
     
