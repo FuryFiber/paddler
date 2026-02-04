@@ -29,7 +29,7 @@ fn current_timestamp() -> u64 {
 async fn list_models(
     app_data: web::Data<AppData>,
 ) -> Result<HttpResponse, Error> {
-    let response = "hello world!"
+    let response = "hello world!";
 
     Ok(HttpResponse::Ok().json(response))
 
