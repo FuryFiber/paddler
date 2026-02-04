@@ -30,7 +30,17 @@ async fn respond(app_data: web::Data<AppData>) -> Result<impl Responder, Error> 
         .and_then(|f| f.split('.').next())
         .unwrap_or("none");
     
-    let response = format!("{{\"data\": [{{\"id\": \"{}\", \"object\": \"model\", \"owned_by\": \"user\"}}], \"object\": \"list\"}}", stem);
+    let response = serde_json::json!({
+        "object": "list",
+        "data": [
+            {
+                "id": stem,
+                "object": "model",
+                "created": 0,
+                "owned_by": "user",
+            }
+        ]
+    });
 
     Ok(HttpResponse::Ok().json(response))
 }
