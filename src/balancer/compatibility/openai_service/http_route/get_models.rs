@@ -29,39 +29,7 @@ fn current_timestamp() -> u64 {
 async fn list_models(
     app_data: web::Data<AppData>,
 ) -> Result<HttpResponse, Error> {
-    let desired_state = app_data
-        .state_database
-        .read_balancer_desired_state()
-        .await
-        .map_err(actix_web::error::ErrorInternalServerError)?;
-
-    // For simplicity, we assume that the model is always ready to use.
-    let model_name = match &desired_state.model {
-        crate::agent_desired_model::AgentDesiredModel::HuggingFace(hf_model_ref) => {
-            format!("hf_{}", hf_model_ref.repo_id.replace('/', "_"))
-        }
-        crate::agent_desired_model::AgentDesiredModel::LocalToAgent(local_model_name) => {
-            local_model_name.clone()
-        }
-        crate::agent_desired_model::AgentDesiredModel::None => {
-            return Err(actix_web::error::ErrorInternalServerError(
-                "No model specified in desired state",
-            ));
-        }
-    };
-
-    let response = json!({
-        "data": [
-            {
-                "id": model_name,
-                "object": "model",
-                "created": current_timestamp(),
-                "owned_by": "user",
-                "permission": [],
-            }
-        ],
-        "object": "list",
-    });
+    let response = "hello world!"
 
     Ok(HttpResponse::Ok().json(response))
 
