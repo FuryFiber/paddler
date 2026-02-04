@@ -1,18 +1,10 @@
-use std::time::SystemTime;
-use std::time::UNIX_EPOCH;
-
 use actix_web::Error;
 use actix_web::HttpResponse;
+use actix_web::Responder;
+use actix_web::error::ErrorInternalServerError;
 use actix_web::get;
 use actix_web::web;
-use anyhow::anyhow;
-use async_trait::async_trait;
-use nanoid::nanoid;
-use serde::Deserialize;
-use serde_json::json;
-use tokio_stream::StreamExt as _;
-
-use crate::balancer::management_service::app_data::AppData;
+use crate::balancer::compatibility::openai_service::app_data::AppData;
 
 pub fn register(cfg: &mut web::ServiceConfig) {
     cfg.service(respond);
