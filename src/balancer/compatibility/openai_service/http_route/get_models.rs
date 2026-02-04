@@ -15,26 +15,16 @@ use tokio_stream::StreamExt as _;
 use crate::balancer::management_service::app_data::AppData;
 
 pub fn register(cfg: &mut web::ServiceConfig) {
-    cfg.service(list_models);
-}
-
-fn current_timestamp() -> u64 {
-    SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .expect("Time went backwards")
-        .as_secs()
+    cfg.service(respond);
 }
 
 #[get("/v1/models")]
-async fn list_models(
-    app_data: web::Data<AppData>,
-) -> Result<HttpResponse, Error> {
+async fn respond(app_data: web::Data<AppData>) -> Result<impl Responder, Error> {
     let desired_state = app_data
         .state_database
         .read_balancer_desired_state()
         .await
-        .map_err(actix_web::error::ErrorInternalServerError)?;
+        .map_err(ErrorInternalServerError)?;
 
-    Ok(HttpResponse::Ok().json("hello world!"))
-
+    Ok(HttpResponse::Ok().json(desired_state))
 }
