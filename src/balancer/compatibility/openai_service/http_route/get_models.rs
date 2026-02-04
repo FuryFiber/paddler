@@ -15,7 +15,7 @@ use tokio_stream::StreamExt as _;
 use crate::balancer::management_service::app_data::AppData;
 
 pub fn register(cfg: &mut web::ServiceConfig) {
-    cfg.service(respond);
+    cfg.service(list_models);
 }
 
 fn current_timestamp() -> u64 {
