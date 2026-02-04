@@ -25,7 +25,7 @@ async fn respond(app_data: web::Data<AppData>) -> Result<impl Responder, Error> 
         AgentDesiredModel::None => None,
     };
     
-    let stem = "";
+    let mut stem = "";
     if let Some(filename) = filename {
         stem = filename.split('.').next().unwrap_or(filename);
     } else {
