@@ -19,18 +19,16 @@ async fn respond(app_data: web::Data<AppData>) -> Result<impl Responder, Error> 
         .await
         .map_err(ErrorInternalServerError)?;
     
-    let filename = match desired_state.model {
+    // Notice the & before desired_state.model
+    let filename = match &desired_state.model {
         AgentDesiredModel::HuggingFace(model) => Some(model.filename.as_str()),
-        AgentDesiredModel::LocalToAgent(path) => Some(path.as_str()), // Or handle differently
+        AgentDesiredModel::LocalToAgent(path) => Some(path.as_str()),
         AgentDesiredModel::None => None,
     };
     
-    let mut stem = "";
-    if let Some(filename) = filename {
-        stem = filename.split('.').next().unwrap_or(filename);
-    } else {
-        stem = "none";
-    }
+    let stem = filename
+        .and_then(|f| f.split('.').next())
+        .unwrap_or("none");
     
     let response = format!("{{\"data\": [{{\"id\": \"{}\", \"object\": \"model\", \"owned_by\": \"user\"}}], \"object\": \"list\"}}", stem);
 
