@@ -17,6 +17,8 @@ async fn respond(app_data: web::Data<AppData>) -> Result<impl Responder, Error> 
         .read_balancer_desired_state()
         .await
         .map_err(ErrorInternalServerError)?;
+    
+    let model = desired_state.model;
 
-    Ok(HttpResponse::Ok().json(desired_state))
+    Ok(HttpResponse::Ok().json(model))
 }
