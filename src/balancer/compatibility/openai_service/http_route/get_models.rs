@@ -32,7 +32,7 @@ async fn respond(app_data: web::Data<AppData>) -> Result<impl Responder, Error> 
         stem = "none";
     }
     
-    let response = "{\"data\": [{\"id\": \"" + stem + "\", \"object\": \"model\", \"owned_by\": \"user\"}], \"object\": \"list\"}";
+    let response = format!("{{\"data\": [{{\"id\": \"{}\", \"object\": \"model\", \"owned_by\": \"user\"}}], \"object\": \"list\"}}", stem);
 
     Ok(HttpResponse::Ok().json(response))
 }
